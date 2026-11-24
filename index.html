@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10243a">
+
+    <title>ECD | Early Care Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #10243a;
+            --navy-light: #193650;
+            --accent: #e7a928;
+            --background: #f3f5f8;
+            --white: #ffffff;
+            --text: #263647;
+            --muted: #788797;
+            --border: #dfe5eb;
+            --success: #16865b;
+            --danger: #c43b3b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            height: 76px;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            color: white;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            color: #bdc8d3;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        .header-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: #c5d0da;
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 45px 20px;
+        }
+
+        .login-layout {
+            width: 100%;
+            max-width: 950px;
+            min-height: 490px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(16, 36, 58, 0.09);
+        }
+
+        .intro-panel {
+            background: var(--navy);
+            color: white;
+            padding: 58px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-panel::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 50%;
+            right: -110px;
+            bottom: -100px;
+            box-shadow: 0 0 0 35px rgba(255,255,255,0.025),
+                        0 0 0 70px rgba(255,255,255,0.02);
+        }
+
+        .intro-tag {
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .intro-content h1 {
+            font-size: 34px;
+            line-height: 1.25;
+            font-weight: 700;
+            margin: 18px 0;
+        }
+
+        .intro-content h1 span {
+            color: var(--accent);
+        }
+
+        .intro-content p {
+            color: #c0ccd7;
+            font-size: 13px;
+            line-height: 1.9;
+            max-width: 330px;
+        }
+
+        .intro-footer {
+            color: #aebdca;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .form-panel {
+            padding: 58px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-heading {
+            margin-bottom: 34px;
+        }
+
+        .form-heading h2 {
+            color: var(--navy);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .form-heading p {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 9px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0 14px;
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--text);
+            background: white;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: var(--navy-light);
+            box-shadow: 0 0 0 3px rgba(25,54,80,0.08);
+        }
+
+        select:disabled {
+            background: #f4f6f8;
+            color: #8c98a5;
+        }
+
+        input.pin-input {
+            letter-spacing: 9px;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        input.pin-input::placeholder {
+            letter-spacing: 7px;
+            color: #c5cdd5;
+        }
+
+        .field-hint {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 49px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 5px;
+        }
+
+        .login-button:hover:not(:disabled) {
+            background: var(--navy-light);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 17px;
+        }
+
+        .message.error {
+            display: block;
+            color: var(--danger);
+            background: #fff1f1;
+            border: 1px solid #f3d1d1;
+        }
+
+        .message.success {
+            display: block;
+            color: var(--success);
+            background: #effaf5;
+            border: 1px solid #c9eadb;
+        }
+
+        .loading-text {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .secure-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .secure-icon {
+            color: var(--success);
+            font-size: 14px;
+        }
+
+        footer {
+            padding: 17px 7%;
+            text-align: center;
+            font-size: 10px;
+            color: var(--muted);
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .authenticated-panel {
+            display: none;
+            text-align: center;
+        }
+
+        .authenticated-panel h2 {
+            color: var(--navy);
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .authenticated-panel p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .logout-button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        @media (max-width: 720px) {
+            header {
+                padding: 0 20px;
+                height: 68px;
+            }
+
+            .header-label {
+                display: none;
+            }
+
+            .login-layout {
+                max-width: 430px;
+                grid-template-columns: 1fr;
+            }
+
+            .intro-panel {
+                padding: 30px;
+                min-height: 210px;
+            }
+
+            .intro-content h1 {
+                font-size: 25px;
+                margin: 12px 0;
+            }
+
+            .intro-content p {
+                font-size: 11px;
+            }
+
+            .intro-footer {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 35px 28px;
+            }
+
+            main {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="brand-mark">ECD</div>
+        <div>
+            <div class="brand-name">EARLY CARE</div>
+            <div class="brand-subtitle">DASHBOARD</div>
+        </div>
+    </div>
+
+    <div class="header-label">SCV CUSTOMER SERVICE</div>
+</header>
+
+<main>
+    <div class="login-layout">
+
+        <section class="intro-panel">
+            <div class="intro-tag">ECD | SCV</div>
+
+            <div class="intro-content">
+                <h1>
+                    Early Care.<br>
+                    <span>Better Insights.</span>
+                </h1>
+
+                <p>
+                    A centralised platform for monitoring customer
+                    onboarding, vehicle performance and early care
+                    activities across the Eicher SCV network.
+                </p>
+            </div>
+
+            <div class="intro-footer">
+                Eicher Commercial Vehicles<br>
+                Customer Service Management
+            </div>
+        </section>
+
+        <section class="form-panel">
+
+            <div id="loginPanel">
+
+                <div class="form-heading">
+                    <h2>Welcome Back</h2>
+                    <p>
+                        Sign in to access your Early Care Dashboard.
+                        Select your name and enter your PIN.
+                    </p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+                        <label for="csmSelect">CSM Name</label>
+
+                        <select id="csmSelect" required disabled>
+                            <option value="">Loading CSM directory...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pinInput">Six-Digit PIN</label>
+
+                        <input
+                            type="password"
+                            id="pinInput"
+                            class="pin-input"
+                            placeholder="••••••"
+                            inputmode="numeric"
+                            pattern="[0-9]{6}"
+                            maxlength="6"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <div class="field-hint">
+                            Enter your registered six-digit PIN.
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                        disabled
+                    >
+                        SIGN IN
+                    </button>
+
+                    <div id="message" class="message"></div>
+
+                </form>
+
+                <div class="secure-note">
+                    <span class="secure-icon">●</span>
+                    Secure, authorised CSM access
+                </div>
+
+            </div>
+
+            <div id="authenticatedPanel" class="authenticated-panel">
+                <h2>Login Successful</h2>
+
+                <p>
+                    Welcome, <strong id="loggedInName"></strong>.<br><br>
+                    Your secure session has been established.
+                    Dashboard access will be enabled after the
+                    data-access security checks are completed.
+                </p>
+
+                <button class="logout-button" id="logoutButton">
+                    Sign Out
+                </button>
+            </div>
+
+        </section>
+    </div>
+</main>
+
+<footer>
+    ECD – Early Care Dashboard | SCV Customer Service
+</footer>
+
+<script type="module">
+
+    import { createClient } from
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    // ==========================================
+    // SUPABASE CONFIGURATION
+    // ==========================================
+
+    const SUPABASE_URL =
+        "https://qotslviyjckukyofsldv.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+    const supabase = createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth: {
+                autoRefreshToken: true,
+                persistSession: true,
+                detectSessionInUrl: false
+            }
+        }
+    );
+
+    // ==========================================
+    // HTML ELEMENTS
+    // ==========================================
+
+    const csmSelect = document.getElementById("csmSelect");
+    const pinInput = document.getElementById("pinInput");
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+
+    const loginPanel = document.getElementById("loginPanel");
+    const authenticatedPanel =
+        document.getElementById("authenticatedPanel");
+
+    const loggedInName = document.getElementById("loggedInName");
+    const logoutButton = document.getElementById("logoutButton");
+
+    // ==========================================
+    // MESSAGE HANDLING
+    // ==========================================
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "message " + type;
+    }
+
+    function clearMessage() {
+        message.textContent = "";
+        message.className = "message";
+    }
+
+    // ==========================================
+    // LOAD CSM DIRECTORY
+    // ==========================================
+
+    async function loadCSMDirectory() {
+
+        try {
+
+            if (
+                SUPABASE_PUBLISHABLE_KEY ===
+                "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+            ) {
+                throw new Error("Supabase publishable key is not configured.");
+            }
+
+            const response = await fetch(
+                `${SUPABASE_URL}/functions/v1/csm-directory`,
+                {
+                    method: "GET",
+                    headers: {
+                        "apikey": SUPABASE_PUBLISHABLE_KEY,
+                        "Authorization":
+                            `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+                    }
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error("Unable to load CSM directory.");
+            }
+
+            csmSelect.innerHTML =
+                '<option value="">Select your name</option>';
+
+            result.csms.forEach(csm => {
+
+                const option = document.createElement("option");
+
+                option.value = csm.id;
+                option.textContent = csm.csm_name;
+
+                csmSelect.appendChild(option);
+
+            });
+
+            csmSelect.disabled = false;
+            loginButton.disabled = false;
+
+        } catch (error) {
+
+            console.error("Directory loading failed:", error);
+
+            csmSelect.innerHTML =
+                '<option value="">Unable to load CSM directory</option>';
+
+            showMessage(
+                "Unable to connect to the CSM directory. Please refresh the page or contact the administrator.",
+                "error"
+            );
+
+        }
+    }
+
+    // ==========================================
+    // LOGIN
+    // ==========================================
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+        clearMessage();
+
+        const csmId = csmSelect.value;
+        const pin = pinInput.value;
+
+        if (!csmId) {
+            showMessage("Please select your CSM name.", "error");
+            return;
+        }
+
+        if (!/^[0-9]{6}$/.test(pin)) {
+            showMessage(
+                "Please enter a valid six-digit PIN.",
+                "error"
+            );
+            return;
+        }
+
+        loginButton.disabled = true;
+        loginButton.textContent = "AUTHENTICATING...";
+
+        try {
+
+            const { data, error } =
+                await supabase.functions.invoke("csm-auth", {
+                    body: {
+                        action: "login",
+                        csm_id: csmId,
+                        pin: pin
+                    }
+                });
+
+            if (error) {
+                throw new Error(
+                    "Unable to authenticate. Please try again."
+                );
+            }
+
+            if (!data || !data.success || !data.session) {
+                throw new Error(
+                    data?.error || "Invalid name or PIN."
+                );
+            }
+
+            // Establish the Supabase Auth session.
+            const { error: sessionError } =
+                await supabase.auth.setSession({
+                    access_token: data.session.access_token,
+                    refresh_token: data.session.refresh_token
+                });
+
+            if (sessionError) {
+                throw new Error(
+                    "Unable to establish a secure session."
+                );
+            }
+
+            // Clear PIN from the form.
+            pinInput.value = "";
+
+            // Show authenticated state.
+            loggedInName.textContent = data.csm.name;
+
+            loginPanel.style.display = "none";
+            authenticatedPanel.style.display = "block";
+
+        } catch (error) {
+
+            showMessage(
+                error.message || "Login failed. Please try again.",
+                "error"
+            );
+
+            pinInput.value = "";
+
+        } finally {
+
+            loginButton.disabled = false;
+            loginButton.textContent = "SIGN IN";
+
+        }
+
+    });
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    logoutButton.addEventListener("click", async () => {
+
+        logoutButton.disabled = true;
+
+        try {
+
+            await supabase.auth.signOut({ scope: "local" });
+
+            authenticatedPanel.style.display = "none";
+            loginPanel.style.display = "block";
+
+            csmSelect.value = "";
+            pinInput.value = "";
+
+            clearMessage();
+
+        } finally {
+
+            logoutButton.disabled = false;
+
+        }
+
+    });
+
+    // ==========================================
+    // CHECK EXISTING SESSION
+    // ==========================================
+
+    async function checkExistingSession() {
+
+        const { data } = await supabase.auth.getSession();
+
+        if (data.session) {
+
+            const { data: csmData, error } = await supabase
+                .from("csm_users")
+                .select("csm_name")
+                .eq("auth_user_id", data.session.user.id)
+                .maybeSingle();
+
+            if (!error && csmData) {
+
+                loggedInName.textContent = csmData.csm_name;
+
+                loginPanel.style.display = "none";
+                authenticatedPanel.style.display = "block";
+
+            }
+
+        }
+
+    }
+
+    // ==========================================
+    // INITIALISE
+    // ==========================================
+
+    await loadCSMDirectory();
+    await checkExistingSession();
+
+</script>
+
+</body>
+</html>
